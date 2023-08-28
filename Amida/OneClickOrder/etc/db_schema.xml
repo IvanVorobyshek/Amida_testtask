@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="one_click_order" resource="default" engine="innodb" comment="One Click Order DB">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="255" comment="SKU"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="true" identity="false"
+                comment="Product ID"/>
+        <column xsi:type="varchar" name="telephone_number" length="15" comment="Telephone number"/>
+        <column xsi:type="timestamp" name="order_created" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Order created"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

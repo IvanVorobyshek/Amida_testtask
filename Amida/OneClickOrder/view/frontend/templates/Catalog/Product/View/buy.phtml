@@ -1,0 +1,53 @@
+<?php
+/** @var \Amida\OneClickOrder\Block\Template $block */
+/** @var $viewBuy \Amida\OneClickOrder\ViewModel\Catalog\Product\Buy */
+$viewBuy = $block->getViewBuy();
+$id = $viewBuy->getProductId();
+$sku = $viewBuy->getProductSku();
+
+?>
+    <button id="buttonBuy"
+            class="action submit primary"
+            style="font-size: 2rem; line-height: 2.2rem; padding: 14px 17px;"
+            onclick="showBuy()">
+        <span>Buy in one click</span>
+    </button>
+
+    <form id="buyForm" style="display: none"
+          action="<?= $block->escapeHtml($block->getUrl('frontoneclickorder/index/save')) ?>"
+          method="post"
+          data-mage-init='{"validation":{}}'>
+        <input
+            class="input-text qty"
+            type="number"
+            name="telephone"
+            placeholder="Enter your telephone number"
+            data-validate='{"required-number":true, "validate-greater-than-zero": true,}' />
+        <input hidden="hidden"
+               name="productId"
+               value="<?= $block->escapeHtml($id) ?>"
+               />
+        <input hidden="hidden"
+               name="sku"
+               value="<?= $block->escapeHtml($sku) ?>"
+        />
+        <input hidden="hidden"
+               name="url"
+               id="url"
+        />
+        <div>
+            <button type="submit"
+                    style="font-size: 2rem; line-height: 2.2rem; padding: 14px 17px; margin-top: 10px;"
+                    class="action submit primary">
+                <span>Confirm</span>
+            </button>
+        </div>
+
+    </form>
+<script>
+    function showBuy(){
+        document.getElementById("buyForm").style.display = "block";
+        document.getElementById("buttonBuy").style.display = "none";
+        document.getElementById("url").value = document.URL;
+    }
+</script>

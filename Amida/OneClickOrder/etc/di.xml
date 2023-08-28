@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Amida\OneClickOrder\Api\Data\OneClickOrderInterface"
+                type="Amida\OneClickOrder\Model\OneClickOrder"/>
+    <preference for="Amida\OneClickOrder\Api\OneClickOrderRepositoryInterface"
+                type="Amida\OneClickOrder\Model\OneClickOrderRepository"/>
+
+    <!--making datasource for grid-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="oneclickorder_data_source" xsi:type="string">OneClickOrderGridCollection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!--    for dataSource-->
+    <virtualType name="OneClickOrderGridCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">one_click_order</argument>
+            <argument name="resourceModel" xsi:type="string">Amida\OneClickOrder\Model\ResourceModel\OneClickOrder</argument>
+        </arguments>
+    </virtualType>
+</config>
