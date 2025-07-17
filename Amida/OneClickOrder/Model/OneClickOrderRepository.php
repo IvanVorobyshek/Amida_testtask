@@ -8,7 +8,7 @@ use Amida\OneClickOrder\Api\Data\OneClickOrderInterface;
 use Amida\OneClickOrder\Model\ResourceModel\OneClickOrder\CollectionFactory;
 use Amida\OneClickOrder\Model\OneClickOrderFactory;
 use Amida\OneClickOrder\Model\ResourceModel\OneClickOrder as OneClickOrderResource;
-use Magento\TestFramework\Exception\NoSuchActionException;
+use Magento\Framework\Exception\LocalizedException;
 
 class OneClickOrderRepository implements OneClickOrderRepositoryInterface
 {
@@ -43,14 +43,14 @@ class OneClickOrderRepository implements OneClickOrderRepositoryInterface
      *
      * @param int $id
      * @return OneClickOrderInterface
-     * @throws NoSuchActionException
+     * @throws LocalizedException
      */
     public function get(int $id): OneClickOrderInterface
     {
         $order = $this->oneClickOrderFactory->create();
         $this->oneClickOrderResource->load($order, $id);
         if (!$order->getId()) {
-            throw new NoSuchActionException(__('Requested order does not exist'));
+            throw new LocalizedException(__('Requested order does not exist'));
         }
         return $order;
     }
@@ -60,14 +60,14 @@ class OneClickOrderRepository implements OneClickOrderRepositoryInterface
      *
      * @param OneClickOrderInterface $order
      * @return bool
-     * @throws NoSuchActionException
+     * @throws LocalizedException
      */
     public function delete(OneClickOrderInterface $order): bool
     {
         try {
             $this->oneClickOrderResource->delete($order);
         } catch (\Exception $e) {
-            throw new NoSuchActionException(__('Unable to remove order #%1', $order->getId()));
+            throw new LocalizedException(__('Unable to remove order #%1', $order->getId()));
         }
         return true;
     }
@@ -77,7 +77,7 @@ class OneClickOrderRepository implements OneClickOrderRepositoryInterface
      *
      * @param int $id
      * @return bool
-     * @throws NoSuchActionException
+     * @throws LocalizedException
      */
     public function deleteById(int $id): bool
     {
@@ -89,14 +89,14 @@ class OneClickOrderRepository implements OneClickOrderRepositoryInterface
      *
      * @param OneClickOrderInterface $order
      * @return bool
-     * @throws NoSuchActionException
+     * @throws LocalizedException
      */
     public function save(OneClickOrderInterface $order): bool
     {
         try {
             $this->oneClickOrderResource->save($order);
         } catch (\Exception $exception) {
-            throw new NoSuchActionException(__('Unable to save order #%1', $order->getId()));
+            throw new LocalizedException(__('Unable to save order #%1', $order->getId()));
         }
         return true;
     }
